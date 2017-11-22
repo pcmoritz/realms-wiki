@@ -175,7 +175,7 @@ def error_handler(e):
 
 
 def create_app():
-    app = Application(__name__)
+    app = Application(__name__, static_url_path='/tmp/')
     app.config.from_object('realms.config.conf')
     app.url_map.converters['regex'] = RegexConverter
     app.url_map.strict_slashes = False
@@ -303,4 +303,3 @@ cli = AppGroup()
 
 # Decorator to be used in modules instead of click.group
 cli_group = functools.partial(click.group, cls=AppGroup)
-

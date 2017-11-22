@@ -5,13 +5,16 @@ import itertools
 import sys
 from datetime import datetime
 
-from flask import abort, g, render_template, request, redirect, Blueprint, flash, url_for, current_app, make_response
+from flask import abort, g, render_template, request, redirect, Blueprint, flash, url_for, current_app, make_response, send_from_directory
 from werkzeug.contrib.atom import AtomFeed
 from flask_login import login_required, current_user
 
 from realms.version import __version__
 from realms.lib.util import to_canonical, remove_ext, gravatar_url
 from .models import PageNotFound
+
+import markdown
+from gtts import gTTS
 
 blueprint = Blueprint('wiki', __name__, template_folder='templates',
                       static_folder='static', static_url_path='/static/wiki')
@@ -187,6 +190,10 @@ def partials():
     return {'partials': _partials(request.args.getlist('imports[]'))}
 
 
+@blueprint.route('/_sound/<path:path>')
+def sound(path):
+    return send_from_directory(filename=path, directory='/tmp/')
+
 @blueprint.route("/_create/", defaults={'name': None})
 @blueprint.route("/_create/<path:name>")
 @login_required
@@ -308,6 +315,10 @@ def page(name):
     data = g.current_wiki.get_page(cname)
 
     if data:
+        # m = markdown.markdown(data.data)
+        # tts = gTTS(text=m, lang='en')
+        # tts.save("/tmp/test.mp3")
+        # print("XXX", m)
         return render_template('wiki/page.html', name=cname, page=data, partials=_partials(data.imports))
     else:
         return redirect(url_for('wiki.create', name=cname))

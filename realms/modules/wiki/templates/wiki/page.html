@@ -30,6 +30,18 @@
   <script>
     $(function(){
       $("#page-content").html(MDR.convert({{ page.data|tojson|safe }}, {{ partials|d([])|tojson|safe }})).show();
+      var paragraphs = document.getElementsByTagName("P");
+      console.log(paragraphs[0].attributes);
+      var heading = document.createElement("h1");
+      var heading_text = document.createTextNode("Big Head!");
+      heading.appendChild(heading_text);
+      document.body.appendChild(heading);
+      audioElement = document.createElement("audio");
+      // audioElement.setAttribute("src", "http://localhost:5000/_sound/test.mp3");
+      audioElement.setAttribute("src", "/tmp/test.mp3");
+      audioElement.setAttribute("controls", true);
+      document.body.appendChild(audioElement);
+      console.log("hello")
     });
   </script>
 {% endblock %}
