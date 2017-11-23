@@ -27,21 +27,26 @@
 {% endblock %}
 
 {% block js %}
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
   <script>
     $(function(){
       $("#page-content").html(MDR.convert({{ page.data|tojson|safe }}, {{ partials|d([])|tojson|safe }})).show();
-      var paragraphs = document.getElementsByTagName("P");
-      console.log(paragraphs[0].attributes);
-      var heading = document.createElement("h1");
-      var heading_text = document.createTextNode("Big Head!");
-      heading.appendChild(heading_text);
-      document.body.appendChild(heading);
-      audioElement = document.createElement("audio");
-      // audioElement.setAttribute("src", "http://localhost:5000/_sound/test.mp3");
-      audioElement.setAttribute("src", "/tmp/test.mp3");
-      audioElement.setAttribute("controls", true);
-      document.body.appendChild(audioElement);
-      console.log("hello")
+      var sections = document.getElementsByTagName("h1");
+      for (var i=0; i < sections.length; i++) {
+        div = document.createElement("div");
+        div.setAttribute("align", "right");
+        audioElement = document.createElement("audio");
+        audioElement.setAttribute("src", "http://localhost:5000/_sound/" + i + ".mp3");
+        audioElement.setAttribute("controls", true);
+        div.appendChild(audioElement)
+        sections[i].appendChild(div)
+      }
     });
   </script>
 {% endblock %}

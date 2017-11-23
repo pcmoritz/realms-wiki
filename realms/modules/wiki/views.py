@@ -13,8 +13,8 @@ from realms.version import __version__
 from realms.lib.util import to_canonical, remove_ext, gravatar_url
 from .models import PageNotFound
 
-import markdown
 from gtts import gTTS
+from bs4 import BeautifulSoup
 
 blueprint = Blueprint('wiki', __name__, template_folder='templates',
                       static_folder='static', static_url_path='/static/wiki')
@@ -301,6 +301,23 @@ def page_write(name):
 
     return dict(sha=sha.decode())
 
+def create_sound_files(html):
+    # import IPython
+    # IPython.embed()
+    i = 0
+    soup = BeautifulSoup(html)
+    for heading in soup.findAll("h1"):
+        print("heading", heading)
+        text = []
+        for child in heading.nextSiblingGenerator():
+            if child.name == "p":
+                text.append(child.text)
+            if child.name == "h1":
+                break
+        # if text != []:
+        #     tts = gTTS(text="\n\n".join(text), lang='en')
+        #     tts.save("/tmp/" + str(i) + ".mp3")
+        i += 1
 
 @blueprint.route("/", defaults={'name': 'home'})
 @blueprint.route("/<path:name>")
@@ -319,6 +336,7 @@ def page(name):
         # tts = gTTS(text=m, lang='en')
         # tts.save("/tmp/test.mp3")
         # print("XXX", m)
+        create_sound_files(data.data)
         return render_template('wiki/page.html', name=cname, page=data, partials=_partials(data.imports))
     else:
         return redirect(url_for('wiki.create', name=cname))

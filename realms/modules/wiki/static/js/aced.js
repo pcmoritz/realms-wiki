@@ -197,6 +197,7 @@ function Aced(settings) {
     $('pre code', preview).each(function(i, e) {
       hljs.highlightBlock(e)
     });
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   }
 
   function getScrollHeight($prevFrame) {

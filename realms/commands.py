@@ -313,7 +313,7 @@ def dev(port, host):
     else:
         yellow("Using default configuration")
 
-    app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, debug=True, threaded=True)
 
 
 def start_server():
