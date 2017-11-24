@@ -1,0 +1,13 @@
+{
+    "ALLOW_ANON": true,
+    "BASE_URL": "http://localhost",
+    "CACHE_TYPE": "simple",
+    "DB_URI": "sqlite:////tmp/wiki.db",
+    "PORT": 5000,
+    "REGISTRATION_ENABLED": true,
+    "SEARCH_TYPE": "elasticsearch",
+    "ELASTICSEARCH_URL": "http://127.0.0.1:9200",
+    "SECRET_KEY": "QC3A4xJHVJCOFqmQkY34zccnFDdHtGxQt37IORUlbJWVlxHAirzS4GWfhD4QDCRC",
+    "SITE_TITLE": "memex",
+    "WIKI_PATH": "/tmp/wiki"
+}
