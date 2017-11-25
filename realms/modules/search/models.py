@@ -167,11 +167,16 @@ class ElasticSearch(BaseSearch):
         if not query:
             return []
 
+        # res = self.elastic.search(index='wiki', body={"query": {
+        #     "multi_match": {
+        #         "query": query,
+        #         "fields": self.fields
+        #     }}})
+
         res = self.elastic.search(index='wiki', body={"query": {
-            "multi_match": {
-                "query": query,
-                "fields": self.fields
-            }}})
+            "match": {
+                "_all": query
+            }}}, index="test-index")
 
         return [hit["_source"] for hit in res['hits']['hits']]
 
