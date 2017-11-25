@@ -174,8 +174,9 @@ class ElasticSearch(BaseSearch):
         #     }}})
 
         res = self.elastic.search(index='test-index', body={"query": {
-            "match": {
-                "_all": query
+            "multi_match": {
+                "query": query,
+                "fields": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             }}})
 
         return [hit["_source"] for hit in res['hits']['hits']]
