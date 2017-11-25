@@ -173,10 +173,10 @@ class ElasticSearch(BaseSearch):
         #         "fields": self.fields
         #     }}})
 
-        res = self.elastic.search(index='wiki', body={"query": {
+        res = self.elastic.search(index='test-index', body={"query": {
             "match": {
                 "_all": query
-            }}}, index="test-index")
+            }}})
 
         return [hit["_source"] for hit in res['hits']['hits']]
 
