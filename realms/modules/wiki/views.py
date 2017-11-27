@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import collections
+import glob
 import itertools
 import sys
 from datetime import datetime
@@ -253,6 +254,20 @@ def index(path):
 
     return render_template('wiki/index.html', index=items, path=path)
 
+@blueprint.route("/_bulkadd")
+def bulkadd():
+    num_articles = 100
+    for name in glob.glob("/data/html/*.html"):
+        print("added article", name)
+        cname = to_canonical(name) if name else ""
+        if num_articles <= 0:
+            break
+        with open(name, "r") as f:
+            g.current_wiki.get_page(cname).write(f.read(),
+                                                 message="automatically added from arXiV",
+                                                 username=current_user.username,
+                                                 email=current_user.email)
+        num_articles -= 1
 
 @blueprint.route("/<path:name>", methods=['POST', 'PUT', 'DELETE'])
 @login_required
