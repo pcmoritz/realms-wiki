@@ -179,7 +179,7 @@ class ElasticSearch(BaseSearch):
                 "fields": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
             }}})
 
-        return [hit["_source"] for hit in res['hits']['hits']]
+        return [hit for hit in res['hits']['hits']]
 
     def users(self, query):
         pass
