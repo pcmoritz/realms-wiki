@@ -267,6 +267,7 @@ def bulkadd():
             cname = to_canonical(title) if title else ""
             if num_articles <= 0:
                 break
+            f.seek(0)
             g.current_wiki.get_page(cname).write(f.read(),
                                                  message="automatically added from arXiV",
                                                  username=current_user.username,
