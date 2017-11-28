@@ -256,18 +256,22 @@ def index(path):
 
 @blueprint.route("/_bulkadd")
 def bulkadd():
+    from bs4 import BeautifulSoup
     num_articles = 100
     for name in glob.glob("/data/html/*.html"):
         print("added article", name)
-        cname = to_canonical(name) if name else ""
-        if num_articles <= 0:
-            break
         with open(name, "r") as f:
+            soup = BeautifulSoup(f)
+            titles = soup.findAll("title")
+            title = titles[0].text
+            cname = to_canonical(title) if title else ""
+            if num_articles <= 0:
+                break
             g.current_wiki.get_page(cname).write(f.read(),
                                                  message="automatically added from arXiV",
                                                  username=current_user.username,
                                                  email=current_user.email)
-        num_articles -= 1
+            num_articles -= 1
 
 @blueprint.route("/<path:name>", methods=['POST', 'PUT', 'DELETE'])
 @login_required
