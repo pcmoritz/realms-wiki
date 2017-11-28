@@ -261,9 +261,10 @@ def bulkadd():
     for name in glob.glob("/data/html/*.html"):
         print("added article", name)
         with open(name, "r") as f:
-            soup = BeautifulSoup(f)
-            titles = soup.findAll("title")
-            title = titles[0].text
+            # soup = BeautifulSoup(f)
+            # titles = soup.findAll("title")
+            # title = titles[0].text
+            title = os.path.join("arxiv", os.path.filename(name))
             cname = to_canonical(title) if title else ""
             if num_articles <= 0:
                 break
