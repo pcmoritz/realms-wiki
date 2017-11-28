@@ -257,7 +257,7 @@ def index(path):
 @blueprint.route("/_bulkadd")
 def bulkadd():
     from bs4 import BeautifulSoup
-    num_articles = 100
+    num_articles = 1000
     for name in glob.glob("/data/html/*.html"):
         print("added article", name)
         with open(name, "r") as f:

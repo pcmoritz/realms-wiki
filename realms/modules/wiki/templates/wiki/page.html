@@ -42,7 +42,7 @@
         div = document.createElement("div");
         div.setAttribute("align", "right");
         audioElement = document.createElement("audio");
-        audioElement.setAttribute("src", "http://localhost:5000/_sound/" + i + ".mp3");
+        audioElement.setAttribute("src", "http://localhost:5000/_sound" + location.pathname + i + ".mp3");
         audioElement.setAttribute("controls", true);
         div.appendChild(audioElement)
         sections[i].appendChild(div)
