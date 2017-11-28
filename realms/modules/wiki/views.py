@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import collections
 import glob
 import itertools
+import os
 import sys
 from datetime import datetime
 
@@ -264,7 +265,7 @@ def bulkadd():
             # soup = BeautifulSoup(f)
             # titles = soup.findAll("title")
             # title = titles[0].text
-            title = os.path.join("arxiv", os.path.filename(name))
+            title = os.path.join("arxiv", os.path.basename(name))
             cname = to_canonical(title) if title else ""
             if num_articles <= 0:
                 break
